@@ -1,0 +1,158 @@
+/* ---------- Updates: items column ---------- */
+
+.updates-items {
+  --items-ease: cubic-bezier(0.65, 0, 0.35, 1);
+
+  position: relative;
+  min-width: 0;
+  height: 100%;
+  border-left: 1px solid var(--color-line);
+  cursor: pointer;
+}
+
+/* The items scroll in here (the scrollbar is hidden) */
+.updates-items__scroller {
+  height: 100%;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.updates-items__scroller::-webkit-scrollbar {
+  display: none;
+}
+
+/* ---------- One item ---------- */
+
+.updates-item {
+  display: flex;
+  flex-direction: column;
+  padding: calc(4.03 * var(--u)) clamp(20px, 5.7vw, 108px) calc(2.5 * var(--u)) calc(2.58 * var(--u));
+  border-top: 1px solid var(--color-line);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  color: #000;
+}
+
+.updates-item:first-child {
+  border-top: none;
+}
+
+/* "News" + date, top-left */
+.updates-item__type {
+  font-size: calc(1.18 * var(--u));
+  line-height: calc(1.85 * var(--u));
+  font-weight: 400;
+}
+
+.updates-item__date {
+  font-size: calc(1.27 * var(--u));
+  line-height: calc(1.85 * var(--u));
+  font-weight: 500;
+}
+
+/* The phrase, around the middle */
+.updates-item__title {
+  max-width: calc(34.3 * var(--u));
+  margin: calc(6.09 * var(--u)) 0 0 calc(8.86 * var(--u));
+  font-size: calc(2.29 * var(--u));
+  line-height: 1;
+  font-weight: 500;
+  letter-spacing: normal;
+}
+
+/* Bottom row: plus button on the left, photo on the right */
+.updates-item__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: calc(5.9 * var(--u));
+}
+
+.updates-item__plus {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+
+  width: calc(3.16 * var(--u));
+  height: calc(3.16 * var(--u));
+  box-sizing: border-box;
+  border: 1px solid #000;
+  border-radius: 8px;
+  background-color: var(--color-pink); /* same as the section */
+  color: #000;
+
+  transition:
+    transform 0.55s var(--items-ease),
+    background-color 0.55s ease,
+    color 0.55s ease;
+}
+
+.updates-item__plus-icon {
+  width: 38%;
+  height: 38%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.2;
+}
+
+/* Hovering the item: the button turns clockwise, goes black and gets a little smaller */
+.updates-item:hover .updates-item__plus {
+  transform: rotate(90deg) scale(0.88);
+  background-color: #000;
+  color: #fff;
+}
+
+/* Same size and frame for every photo */
+.updates-item__image {
+  flex-shrink: 0;
+  width: calc(15.2 * var(--u));
+  aspect-ratio: 288 / 173;
+  border-radius: 9px;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.updates-item__image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s var(--items-ease);
+}
+
+/* ...and they zoom in slightly on hover */
+.updates-item:hover .updates-item__image img {
+  transform: scale(1.07);
+}
+
+/* ---------- Blurry "magnifying glass" around the mouse ---------- */
+
+.updates-lens {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 5;
+  width: clamp(80px, calc(6.3 * var(--u)), 120px); /* radius = 2.5x the pointer cursor */
+  aspect-ratio: 1;
+  border-radius: 50%;
+  pointer-events: none;
+
+  background-color: rgba(255, 255, 255, 0.15);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+
+  opacity: 0;
+  transform: translate3d(-300px, -300px, 0);
+  will-change: transform;
+  transition: opacity 0.25s ease;
+}
+
+.updates-lens.is-visible {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .updates-item__plus,
+  .updates-item__image img {
+    transition-duration: 0.01ms;
+  }
+}

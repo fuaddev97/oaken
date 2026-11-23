@@ -1,0 +1,242 @@
+/* ---------- Header ---------- */
+
+/*
+  The shell stays in the normal page flow and reserves the header's space.
+  The header itself is fixed to the viewport and is moved up by script
+  200ms AFTER the page starts scrolling (see Header.tsx), so for a moment the
+  page content slides through the header area.
+*/
+.header-shell {
+  --logo-h: clamp(96px, 10.7vw, 203px);
+  --header-pad-y: clamp(16px, 1.6vw, 30px);
+  --header-h: calc(var(--logo-h) + 2 * var(--header-pad-y));
+
+  height: var(--header-h);
+}
+
+.header {
+  /* same stacking level as the hero (z-index: 1): the later one in the page paints on top */
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* logo at one edge, menu at the other */
+
+  --header-pad-x: clamp(20px, 5.7vw, 108px);
+  --menu-size: clamp(44px, 3.17vw, 60px);
+  --menu-ease: cubic-bezier(0.65, 0, 0.35, 1);
+
+  height: var(--header-h);
+  padding: 0 var(--header-pad-x);
+  /* no background: the page background shows through, so content passing behind/over it stays visible */
+  will-change: transform;
+
+  /* drops back under the hero only after the menu has finished closing */
+  transition: z-index 0s linear 0.6s;
+}
+
+/* while the menu is open the header (and its dimmer + panel) covers the whole page */
+.header--open {
+  z-index: 10;
+  transition-delay: 0s;
+}
+
+/* ---------- Logo ---------- */
+
+.header__logo {
+  display: block;
+  line-height: 0;
+  height: var(--logo-h);
+}
+
+/* ---------- Menu (label + button) ---------- */
+
+.header__menu {
+  position: relative;
+  z-index: 3; /* label + button stay above the dimmed page and the panel */
+  display: flex;
+  align-items: center;
+  gap: clamp(16px, 1.9vw, 36px);
+  cursor: pointer;
+}
+
+/* Window that only shows one "menu" at a time */
+.header__menu-label {
+  --label-line: 1.3em;
+
+  overflow: hidden;
+  height: var(--label-line);
+  font-size: clamp(20px, 1.64vw, 31px);
+  font-weight: 700;
+  line-height: var(--label-line);
+  color: var(--color-ink);
+}
+
+.header__menu-track {
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.55s var(--menu-ease);
+}
+
+.header__menu-track p {
+  height: var(--label-line);
+  line-height: var(--label-line);
+  white-space: nowrap;
+}
+
+/* Slide the track up by exactly one label: first "menu" exits, second takes its place */
+.header__menu:hover .header__menu-track,
+.header__menu:has(:focus-visible) .header__menu-track {
+  transform: translateY(-50%);
+}
+
+/* Square plus button */
+.header__menu-button {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+
+  width: var(--menu-size);
+  height: var(--menu-size);
+  padding: 0;
+
+  border: none;
+  border-radius: 0.5rem;
+  background-color: #000;
+  color: #fff; /* plus sign stays white */
+  cursor: pointer;
+
+  transition:
+    transform 0.55s var(--menu-ease),
+    background-color 0.55s ease;
+}
+
+.header__menu-icon {
+  width: 38%;
+  height: 38%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.2;
+  stroke-linecap: butt;
+}
+
+/* Clockwise turn + black -> gray */
+.header__menu:hover .header__menu-button,
+.header__menu-button:focus-visible {
+  transform: rotate(90deg);
+  background-color: #6b6b6b;
+}
+
+.header__menu-button:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 3px;
+}
+
+/* ---------- Open menu ---------- */
+
+/* the plus turns into a cross */
+.header__menu-icon {
+  transition: transform 0.55s var(--menu-ease);
+}
+
+.header--open .header__menu-icon {
+  transform: rotate(45deg);
+}
+
+.header--open .header__menu-button {
+  background-color: #6b6b6b;
+}
+
+/* Page dimmer. It lives inside the (moving) header, so it is oversized to cover the whole screen
+   whatever the header's offset is. */
+.header__dim {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: calc(100vh + 400px);
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.6s var(--menu-ease),
+    visibility 0s linear 0.6s;
+}
+
+.header--open .header__dim {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+/* The panel is a card behind the label + button that grows out of the button's corner. */
+.menu-panel {
+  --panel-w: min(calc(100vw - 16px), clamp(300px, 45.7vw, 880px));
+
+  position: absolute;
+  z-index: 2;
+  top: calc((var(--header-h) - var(--menu-size)) / 2 - clamp(10px, 2vw, 38px));
+  right: max(8px, calc(var(--header-pad-x) - clamp(8px, 2.4vw, 46px)));
+  box-sizing: border-box;
+  width: var(--panel-w);
+  height: clamp(380px, 39.2vw, 745px);
+  padding: clamp(110px, 10.1vw, 192px) 0 0 clamp(24px, 7.96vw, 151px);
+  border-radius: clamp(4px, 0.4vw, 8px);
+  color: #000;
+
+  transform: scale(0.37);
+  transform-origin: top right;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    transform 0.6s var(--menu-ease),
+    opacity 0.45s ease,
+    visibility 0s linear 0.6s;
+}
+
+.header--open .menu-panel {
+  transform: none;
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+.menu-panel__heading {
+  font-size: clamp(15px, 1.34vw, 25px);
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+.menu-panel__list {
+  --slide-line: clamp(40px, 3.8vw, 72px);
+
+  margin: clamp(10px, 2vw, 38px) 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: clamp(26px, 2.5vw, 47px);
+  font-weight: 500;
+  line-height: var(--slide-line);
+}
+
+.menu-panel__list a {
+  display: block;
+  width: fit-content;
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Respect users who prefer less motion */
+@media (prefers-reduced-motion: reduce) {
+  .header__menu-track,
+  .header__menu-button,
+  .header__menu-icon,
+  .header__dim,
+  .menu-panel {
+    transition-duration: 0.01ms;
+  }
+}

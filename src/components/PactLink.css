@@ -1,0 +1,153 @@
+/* ---------- "About the Housing Pact" link ---------- */
+
+.pact-link {
+  --pact-size: clamp(44px, calc(4 * var(--u)), 76px); /* button size */
+  --pact-gap: clamp(14px, calc(2 * var(--u)), 38px); /* space between button and phrase */
+  --pact-ease: cubic-bezier(0.65, 0, 0.35, 1);
+  --pact-time: 0.6s;
+
+  position: relative;
+  z-index: 3; /* above the floating shapes, like the paragraph */
+
+  display: inline-flex;
+  align-items: center;
+  margin-top: clamp(28px, calc(3.6 * var(--u)), 72px);
+  cursor: pointer;
+  outline: none;
+
+  /* same look as the hero paragraph */
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  font-size: clamp(14px, calc(1.2 * var(--u)), 23px); /* a bit smaller than the paragraph */
+  line-height: 1.5;
+  letter-spacing: normal;
+  color: #000; /* hero text color */
+}
+
+/* ---------- Slots (they grow / shrink so the phrase slides) ---------- */
+
+.pact-link__slot {
+  position: relative;
+  flex-shrink: 0;
+  height: var(--pact-size);
+  transition:
+    width var(--pact-time) var(--pact-ease),
+    margin var(--pact-time) var(--pact-ease);
+}
+
+.pact-link__slot--start {
+  width: var(--pact-size);
+  margin-right: var(--pact-gap);
+}
+
+.pact-link__slot--end {
+  width: 0;
+  margin-left: 0;
+}
+
+/* ---------- Buttons ---------- */
+
+.pact-link__button {
+  /* centered on its slot, so it shrinks / grows around the slot's moving center */
+  position: absolute;
+  top: 0;
+  left: 50%;
+  display: grid;
+  place-items: center;
+
+  width: var(--pact-size);
+  height: var(--pact-size);
+  border: 1px solid #000;
+  border-radius: 6px;
+  box-sizing: border-box;
+
+  transform: translateX(-50%) scale(var(--scale, 1));
+  transition: transform var(--pact-time) var(--pact-ease);
+}
+
+/* Before hover: hero background color, hero text color */
+.pact-link__button--light {
+  --scale: 1;
+  background-color: var(--pact-bg, var(--color-bg)); /* matches whatever it sits on */
+  color: #000;
+}
+
+/* After hover: colors swapped */
+.pact-link__button--dark {
+  --scale: 0;
+  background-color: #000;
+  color: var(--pact-bg, var(--color-bg));
+}
+
+.pact-link__arrow {
+  width: 54%;
+  height: 54%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.1;
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+}
+
+/* ---------- Mirrored variant: phrase first, button on its right (add class "pact-link--reverse") ---------- */
+
+.pact-link--reverse {
+  flex-direction: row-reverse;
+}
+
+.pact-link--reverse .pact-link__slot--start {
+  margin-right: 0;
+  margin-left: var(--pact-gap);
+}
+
+.pact-link--reverse .pact-link__slot--end {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.pact-link--reverse:hover .pact-link__slot--start,
+.pact-link--reverse:focus-visible .pact-link__slot--start {
+  margin-left: 0;
+}
+
+.pact-link--reverse:hover .pact-link__slot--end,
+.pact-link--reverse:focus-visible .pact-link__slot--end {
+  margin-left: 0;
+  margin-right: var(--pact-gap);
+}
+
+/* ---------- Phrase ---------- */
+
+.pact-link__label {
+  white-space: nowrap;
+}
+
+/* ---------- Hover (and keyboard focus) ---------- */
+
+.pact-link:hover .pact-link__slot--start,
+.pact-link:focus-visible .pact-link__slot--start {
+  width: 0;
+  margin-right: 0;
+}
+
+.pact-link:hover .pact-link__slot--end,
+.pact-link:focus-visible .pact-link__slot--end {
+  width: var(--pact-size);
+  margin-left: var(--pact-gap);
+}
+
+.pact-link:hover .pact-link__button--light,
+.pact-link:focus-visible .pact-link__button--light {
+  --scale: 0;
+}
+
+.pact-link:hover .pact-link__button--dark,
+.pact-link:focus-visible .pact-link__button--dark {
+  --scale: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pact-link {
+    --pact-time: 0.01ms;
+  }
+}

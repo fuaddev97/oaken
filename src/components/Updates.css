@@ -1,0 +1,18 @@
+/* ---------- Updates ---------- */
+
+.updates {
+  /* one layout unit: 1vw, capped (same as the hero) */
+  --u: min(1vw, 19.2px);
+
+  position: relative;
+  z-index: 1; /* same level as the header and hero; later in the page, so it paints over the hero's arrowheads */
+
+  display: grid;
+  grid-template-columns: 41.1% 1fr; /* title column is a bit under half the width */
+  grid-template-rows: minmax(0, 1fr); /* the row is exactly the section's height, however tall the items are */
+
+  width: 100%;
+  height: 100vh; /* exactly one viewport tall */
+  overflow: hidden;
+  background-color: var(--color-pink);
+}

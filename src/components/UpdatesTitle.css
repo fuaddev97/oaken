@@ -1,0 +1,37 @@
+/* ---------- Updates: title column ---------- */
+
+.updates-title {
+  /* the arrow squares blend into the pink background */
+  --pact-bg: var(--color-pink);
+
+  height: 100%;
+  /* the bottom padding is where the heading and link come to rest when the items reach their end */
+  padding: calc(7.4 * var(--u)) 20px calc(5.5 * var(--u)) clamp(20px, 5.7vw, 108px);
+}
+
+/* heading + link move together (see UpdatesTitle.tsx) */
+.updates-title__content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  will-change: transform;
+}
+
+/* exactly the same styling as the hero title (.hero__title) */
+.updates-title__heading {
+  font-size: calc(9.5 * var(--u));
+  font-family: 'Anton', sans-serif;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: #000;
+}
+
+.updates-title__heading span {
+  display: block;
+}
+
+.updates-title__link {
+  margin-top: calc(4.75 * var(--u));
+}

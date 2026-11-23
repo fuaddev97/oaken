@@ -1,0 +1,119 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+/* ---------- Hero ---------- */
+
+.hero {
+  /* One layout unit: 1vw, capped so everything stops growing on very wide screens */
+  --u: min(1vw, 19.2px);
+
+  position: relative;
+  z-index: 1; /* same level as the header (the later one in the page paints on top) */
+  isolation: isolate; /* keep the shape/text layering contained inside this section */
+  overflow-x: clip; /* floating shapes never cause horizontal scrolling... */
+  overflow-y: visible; /* ...but may extend over the header area instead of being cut off */
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* content sits near the vertical center */
+
+  /* viewport height minus (roughly) the header height */
+  min-height: max(480px, calc(100svh - 14 * var(--u)));
+  padding: 0 20px 0; /* no top padding (content sits a little above the center); no bottom padding so the arrowheads end at the section edge */
+  text-align: center;
+}
+
+/* ---------- Title ---------- */
+
+.hero__title {
+  /* no position / z-index here, so the two lines below layer against the shapes */
+  font-size: calc(9.5 * var(--u)); 
+  font-family: 'Anton', sans-serif;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: #000;
+  text-align: center;
+}
+.hero__line {
+  display: block;
+  position: relative;
+  width: fit-content;
+  margin-inline: auto;
+}
+
+/* "BUILDING": bottom layer. Its stacking context also holds the shapes, which paint above its text. */
+.hero__line--building {
+  z-index: 1;
+}
+
+/* "AFFORDABILITY": top layer, paints over the shapes */
+.hero__line--affordability {
+  z-index: 2;
+}
+
+/* ---------- Floating shapes ---------- */
+
+.hero__shape {
+  --dx: 0px;
+  --dy: 0px;
+  --r: 0deg;
+
+  position: absolute;
+  z-index: 1; /* above the BUILDING text (inside the BUILDING line's stacking context) */
+  pointer-events: none;
+
+  /* position is driven smoothly by Hero.tsx every animation frame */
+  translate: var(--dx) var(--dy);
+  rotate: var(--r);
+  will-change: translate, rotate;
+}
+
+.hero__shape svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* "F": left of the title. Its right edge pokes slightly over the start of "BUILDING",
+   and its lower part dips behind the start of "AFFORDABILITY". */
+.hero__shape--f {
+  height: calc(22.9 * var(--u)); /* 20% smaller than before */
+  aspect-ratio: 326 / 403;
+  right: calc(100% - 2 * var(--u));
+  top: calc(-3.95 * var(--u));
+}
+
+.hero__shape--f path {
+  fill: #e2d4e7;
+}
+
+/* Backwards "C": right of the title. Its top corner overlaps the end of "BUILDING",
+   and most of it sits behind the end of "AFFORDABILITY". */
+.hero__shape--c {
+  height: calc(20.2 * var(--u)); /* 20% smaller than before */
+  aspect-ratio: 238 / 323;
+  left: calc(100% - 1.5 * var(--u));
+  top: calc(1.9 * var(--u));
+}
+
+.hero__shape--c path {
+  fill: #ebf4fd;
+}
+
+/* ---------- Paragraph ---------- */
+
+.hero__text {
+  position: relative;
+  z-index: 3; /* always above the shapes, so the text stays readable */
+
+  width: min(100%, calc(58 * var(--u)));
+  margin-top: clamp(20px, calc(4 * var(--u)), 80px);
+
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  font-size: clamp(16px, calc(1.48 * var(--u)), 28px);
+  line-height: 1.5;
+  letter-spacing: normal;
+  color: #000;
+}

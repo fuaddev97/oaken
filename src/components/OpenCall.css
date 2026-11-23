@@ -1,0 +1,48 @@
+/* ---------- Open call ---------- */
+
+.open-call {
+  --u: min(1vw, 19.2px);
+  /* the arrow squares blend into the white background */
+  --pact-bg: #fff;
+
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  min-height: max(100svh, 560px);
+  padding: calc(9.45 * var(--u)) 20px calc(4 * var(--u)) 36.1%;
+  background-color: #fff;
+  color: #000;
+}
+
+.open-call__content {
+  width: calc(37.4 * var(--u)); /* wide enough for the paragraph to keep its line breaks */
+  max-width: 100%;
+}
+
+/* exactly the same styling as the Updates heading */
+.open-call__title {
+  font-size: calc(9.5 * var(--u));
+  font-family: 'Anton', sans-serif;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: #000;
+}
+
+.open-call__title span {
+  display: block; /* "CALL" sits under "OPEN" */
+}
+
+.open-call__text {
+  margin-top: calc(4.7 * var(--u));
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  font-size: calc(1.46 * var(--u));
+  font-weight: 300;
+  line-height: 1.64;
+  color: #6b6b6b;
+}
+
+.open-call__link {
+  margin-top: calc(2.45 * var(--u));
+}

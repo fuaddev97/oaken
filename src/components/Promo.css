@@ -1,0 +1,105 @@
+/* ---------- Promo ---------- */
+
+.promo {
+  --u: min(1vw, 19.2px);
+
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 115svh; /* a bit taller than the viewport */
+  min-height: 560px;
+  background-color: #000; /* the black "screen" that the house-shaped reveal opens up */
+}
+
+/* Everything visible lives in the stage; the house-shaped clip-path (set from Promo.tsx)
+   decides which part of it can be seen. */
+.promo__stage {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.promo__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+/* dark screen in front of the video */
+.promo__overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* ---------- Title ---------- */
+
+.promo__title {
+  position: absolute;
+  left: 50%; /* first letter starts right on the middle line of the section */
+  top: 24%;
+
+  /* same look as the Updates heading, but a bit smaller and pink */
+  font-family: 'Anton', sans-serif;
+  font-size: calc(6.2 * var(--u));
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--color-pink);
+}
+
+.promo__title span {
+  display: block; /* one word per line */
+}
+
+/* ---------- Text + "Play video" (bottom half of the left side) ---------- */
+
+.promo__copy {
+  position: absolute;
+  left: 13.3%;
+  bottom: 11%;
+  width: min(44%, calc(27.5 * var(--u)));
+  color: var(--color-pink);
+}
+
+.promo__text {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  font-size: clamp(16px, calc(1.6 * var(--u)), 31px);
+  line-height: 1.6;
+  color: var(--color-pink);
+}
+
+/* "Play video": transparent, everything in pink */
+.promo__link {
+  margin-top: calc(6.5 * var(--u));
+  color: var(--color-pink);
+}
+
+.promo__link .pact-link__button--light {
+  background-color: transparent;
+  border-color: var(--color-pink);
+  color: var(--color-pink);
+}
+
+.promo__play {
+  stroke-width: 1.1;
+}
+
+/* the button that grows on hover is drawn by the cut-out svg (solid pink, play outline see-through) */
+.promo__link .pact-link__button--dark {
+  background-color: transparent;
+  border-color: transparent;
+  color: var(--color-pink);
+}
+
+.promo__cutout {
+  position: absolute;
+  inset: -1px;
+  width: calc(100% + 2px);
+  height: calc(100% + 2px);
+}

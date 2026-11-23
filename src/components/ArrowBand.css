@@ -1,0 +1,27 @@
+/* ---------- Arrowheads band ---------- */
+
+.arrow-band {
+  --u: min(1vw, 19.2px);
+
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  /* the band (starts 16.3 units down, 25.48 units tall) plus a small white strip below it */
+  height: calc((16.3 + 25.48 + 5.35) * var(--u));
+  background-color: #fff;
+  overflow: hidden;
+}
+
+/* same drawing and size as under the Hero; here it sits in the upper-middle of the section */
+.arrow-band .arrowheads {
+  z-index: auto;
+  top: calc(16.3 * var(--u));
+  height: calc(25.48 * var(--u));
+}
+
+/* a touch softer and thicker than under the Hero, to match the design */
+.arrow-band .arrowheads path {
+  stroke: #d3ba89;
+  stroke-width: 1.2;
+  transform: translateX(0.5px); /* lines straddle two pixels, like the design */
+}

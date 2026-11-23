@@ -1,0 +1,113 @@
+/* ---------- Page loader ---------- */
+
+.loader {
+  --loader-ease: cubic-bezier(0.76, 0, 0.24, 1);
+
+  position: fixed;
+  inset: 0;
+  z-index: 100; /* above the header, its dimmer and the menu panel */
+  background-color: #eed0e1;
+  color: #000;
+  overflow: hidden;
+  transition: transform 1s var(--loader-ease);
+}
+
+.loader--leave {
+  transform: translateY(-100%);
+}
+
+/* artwork + text + bar fade just before the screen slides away */
+.loader__mark,
+.loader__text,
+.loader__bar {
+  transition: opacity 0.35s ease;
+}
+
+.loader--fade .loader__mark,
+.loader--fade .loader__text,
+.loader--fade .loader__bar,
+.loader--leave .loader__mark,
+.loader--leave .loader__text,
+.loader--leave .loader__bar {
+  opacity: 0;
+}
+
+.loader__mark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: clamp(120px, 21vh, 240px);
+  aspect-ratio: 326 / 403;
+  transform: translate(-50%, -50%);
+}
+
+.loader__mark .logo__svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* unfilled artwork: the logo, washed out into the pink */
+.loader__mark-base {
+  opacity: 0.28;
+  filter: grayscale(1);
+}
+
+.loader__mark-fill {
+  clip-path: inset(0 calc(100% - var(--loader-progress, 0%)) 0 0);
+}
+
+.loader__mark-fill .logo__brick,
+.loader__mark-fill .logo__ring {
+  transition: none;
+}
+
+/* text under the artwork; a window one line tall that rolls from one message to the next */
+.loader__text {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 5.5vh;
+  height: 1.3em;
+  overflow: hidden;
+  font-family: 'Anton', 'Arial Narrow', sans-serif;
+  font-size: clamp(18px, 1.5vw, 30px);
+  line-height: 1.3em;
+  letter-spacing: 0.01em;
+  text-align: center;
+}
+
+.loader__text-track {
+  transition: transform 0.6s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.loader__text-track p {
+  margin: 0;
+  height: 1.3em;
+}
+
+.loader__text-track.is-welcome {
+  transform: translateY(-50%);
+}
+
+/* progress bar along the bottom edge of the screen */
+.loader__bar {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: clamp(5px, 0.8vh, 8px);
+  background-color: #000;
+  transform-origin: left center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loader,
+  .loader__mark,
+  .loader__text,
+  .loader__bar,
+  .loader__text-track {
+    transition-duration: 0.01ms;
+  }
+}

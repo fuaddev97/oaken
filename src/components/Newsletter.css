@@ -1,0 +1,118 @@
+/* ---------- Newsletter ---------- */
+
+.newsletter {
+  --u: min(1vw, 19.2px);
+  /* the arrow square blends into the white background */
+  --pact-bg: #fff;
+
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  /* 9.85 units shorter than a screen, with the same amount added back as bottom padding:
+     the content ends up 9.85 units closer to the arrowheads above, nothing else moves */
+  min-height: calc(max(100svh, 560px) - 9.85 * var(--u));
+  padding: 0 13.3% calc(9.85 * var(--u));
+  background-color: #fff;
+  color: #000;
+}
+
+/* ---------- Left side ---------- */
+
+.newsletter__title {
+  flex: 0 0 51.7%;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  font-size: calc(2.6 * var(--u));
+  font-weight: 500;
+  line-height: 1;
+  color: #000;
+}
+
+.newsletter__title span {
+  display: block;
+}
+
+/* ---------- Right side ---------- */
+
+.newsletter__right {
+  flex: 1;
+  min-width: 0;
+}
+
+.newsletter__field {
+  display: flex;
+  align-items: center;
+  height: calc(9.8 * var(--u));
+  border: 1px solid #000;
+  border-radius: calc(0.63 * var(--u));
+  background-color: #fff;
+}
+
+.newsletter__input {
+  flex: 0 0 56.25%;
+  min-width: 0;
+  height: 100%;
+  padding: 0 0 0 calc(1.5 * var(--u)); /* small gap to the left border */
+  border: none;
+  border-radius: calc(0.63 * var(--u));
+  background: transparent;
+  color: #000;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  font-size: calc(1.35 * var(--u)); /* same as the note under the field */
+  /* the browser's normal focus outline is kept on purpose */
+}
+
+.newsletter__input::placeholder {
+  color: #808080;
+  opacity: 1;
+}
+
+/* "Submit": phrase first, then the square arrow button on its right */
+.newsletter__submit {
+  --pact-gap: calc(0.95 * var(--u));
+  margin: 0 calc(5.5 * var(--u)) 0 calc(0.95 * var(--u));
+  flex-shrink: 0;
+}
+
+.newsletter__note {
+  margin-top: calc(1.4 * var(--u));
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  font-size: calc(1.35 * var(--u));
+  font-weight: 400;
+  line-height: 1.5;
+  color: #7b7b7b;
+}
+
+.newsletter__note a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+@media (max-width: 800px) {
+  .newsletter {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    gap: 32px;
+    padding: 64px 20px;
+  }
+
+  .newsletter__title {
+    flex: none;
+    font-size: 32px;
+  }
+
+  .newsletter__field {
+    height: 120px;
+  }
+
+  .newsletter__input {
+    padding-left: 24px;
+    font-size: 16px;
+  }
+
+  .newsletter__note {
+    font-size: 15px;
+  }
+}

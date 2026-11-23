@@ -1,0 +1,212 @@
+/* ---------- Timeline ---------- */
+
+.timeline {
+  --u: min(1vw, 19.2px);
+  --timeline-h: max(115svh, 560px); /* same height as the Promo */
+
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  /* the section itself plus the scroll distance during which the posts switch */
+  height: calc(var(--timeline-h) + var(--timeline-steps) * var(--timeline-step) * 100svh);
+  background-color: #fff;
+  color: #000;
+}
+
+/* Stays on screen with its bottom edge on the bottom of the viewport */
+.timeline__pin {
+  position: sticky;
+  top: calc(100svh - var(--timeline-h));
+  height: var(--timeline-h);
+  overflow: hidden;
+  background-color: #fff;
+}
+
+/* The visible part when pinned: exactly one viewport tall */
+.timeline__frame {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: min(100svh, var(--timeline-h));
+}
+
+/* ---------- Title ---------- */
+
+.timeline__title {
+  position: absolute;
+  left: 13.34%;
+  top: calc(3.5 * var(--u));
+
+  /* same look as the hero title, a bit smaller than the Promo heading */
+  font-family: 'Anton', sans-serif;
+  font-size: calc(4.7 * var(--u));
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: #000;
+  white-space: nowrap;
+}
+
+/* ---------- Posts ---------- */
+
+.timeline__posts {
+  position: absolute;
+  left: 13.34%;
+  right: 16.2%;
+  top: calc(12.2 * var(--u));
+  height: calc(21.9 * var(--u));
+}
+
+.timeline-post {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  will-change: transform, opacity;
+}
+
+.timeline-post__body {
+  width: calc(36.5 * var(--u));
+  max-width: 60%;
+}
+
+.timeline-post__title {
+  min-height: 2.06em; /* room for two lines, so the paragraph always starts at the same height */
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  font-size: calc(2.15 * var(--u));
+  font-weight: 300;
+  line-height: 1.03;
+  color: #000;
+}
+
+.timeline-post__text {
+  max-width: calc(34.8 * var(--u));
+  margin-top: calc(1.75 * var(--u));
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  font-size: calc(1.16 * var(--u));
+  font-weight: 400;
+  line-height: 1.64;
+  color: #000;
+}
+
+.timeline-post__image {
+  flex-shrink: 0;
+  width: calc(21.9 * var(--u));
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: calc(0.55 * var(--u));
+  background-color: #e6e7e8;
+}
+
+.timeline-post__image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ---------- 01 / 05 ---------- */
+
+.timeline__count {
+  position: absolute;
+  left: 13.34%;
+  bottom: calc(15.4 * var(--u));
+  display: flex;
+  align-items: baseline;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  line-height: 1;
+}
+
+.timeline__numbers {
+  position: relative;
+  display: block;
+  width: calc(5.4 * var(--u));
+  font-size: calc(4.5 * var(--u));
+  font-weight: 500;
+  color: #000;
+}
+
+.timeline__number {
+  position: absolute;
+  left: 0;
+  top: 0;
+  will-change: transform, opacity;
+}
+
+/* invisible, only gives the number box its height and baseline */
+.timeline__numbers::before {
+  content: '00';
+  visibility: hidden;
+}
+
+.timeline__total {
+  font-size: calc(2.2 * var(--u));
+  font-weight: 500;
+  color: #a9a9a9;
+}
+
+/* ---------- Tape ---------- */
+
+.timeline__tapeview {
+  position: absolute;
+  left: calc(0.8 * var(--u));
+  right: calc(0.8 * var(--u));
+  bottom: calc(4.06 * var(--u));
+  height: calc(9.15 * var(--u));
+  overflow: hidden;
+}
+
+/* The tape starts where the first long line sits (11.29% of the width) */
+.timeline__tape {
+  position: absolute;
+  left: calc(11.29vw - 0.8 * var(--u));
+  bottom: 0;
+  display: flex;
+  align-items: flex-end;
+  height: 100%;
+  will-change: transform;
+}
+
+.timeline__line {
+  flex: 0 0 calc(37.16 * var(--u) / 27);
+  height: calc(5.9 * var(--u));
+  border-left: 1px solid #dcdcdc;
+}
+
+.timeline__line--long {
+  height: 100%;
+  border-left-color: #000;
+}
+
+/* "Current step": sits on the first lane only (it is part of the tape, so it slides away) */
+.timeline__badge {
+  position: absolute;
+  left: calc(1.2 * var(--u));
+  top: calc(3.45 * var(--u));
+  display: flex;
+  align-items: center;
+  gap: calc(1.95 * var(--u));
+  height: calc(3.5 * var(--u));
+  padding: 0 calc(1.8 * var(--u)) 0 calc(1.9 * var(--u));
+  border-radius: calc(0.32 * var(--u));
+  background-color: #000;
+  color: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  font-size: calc(1.17 * var(--u));
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.timeline__badge svg {
+  width: calc(1.3 * var(--u));
+  height: calc(1.3 * var(--u));
+  fill: none;
+  stroke: #fff;
+  stroke-width: 1.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}

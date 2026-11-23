@@ -1,0 +1,37 @@
+/* ---------- Rolling hover text (see SlideText.tsx) ---------- */
+
+.slide-link {
+  --slide-line: 1.5em; /* height of one line; set it on the link to match its line-height */
+  --slide-ease: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.slide-text {
+  display: block;
+  overflow: hidden;
+  height: var(--slide-line);
+  line-height: var(--slide-line);
+}
+
+.slide-text__track {
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.55s var(--slide-ease);
+}
+
+.slide-text__line {
+  height: var(--slide-line);
+  line-height: var(--slide-line);
+  white-space: nowrap;
+}
+
+/* Slide up by exactly one line */
+.slide-link:hover .slide-text__track,
+.slide-link:focus-visible .slide-text__track {
+  transform: translateY(-50%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slide-text__track {
+    transition-duration: 0.01ms;
+  }
+}
