@@ -1,90 +1,61 @@
-# Housing Pact — Samsun
+# Housing Pact – Real-Estate Website
 
-A React and TypeScript website for the **Housing Pact**, an initiative focused on making high-quality rental housing more affordable in Samsun, Türkiye.
-
-The site introduces the initiative, shares project updates, explains its development timeline, and invites landowners and developers to take part in creating more affordable homes.
+A single-page real-estate website built section by section with **React**, **Vite** and **TypeScript**, styled with **vanilla CSS only** (no UI or animation libraries).
 
 ## Features
 
-- **Interactive hero section** with animated logo shapes that respond to pointer movement.
-- **Navigation menu** with animated transitions and in-page links.
-- **Latest updates** section with a scrollable news panel and pointer-following visual effect.
-- **Promotional video** with a scroll-controlled, house-shaped reveal.
-- **Project timeline** presenting five stages of the Housing Pact, from early research through to reviewing its impact.
-- **Open call** section for developers and landowners interested in contributing projects.
-- **Momentum scrolling** with a scroll hand-off between the page and the news panel.
-- **Newsletter sign-up interface** and contact information in the footer.
-- **Custom loading screen** and animated hover interactions throughout the site.
+- **Page loader** – a pink start-up screen that follows real asset loading (fonts, images, videos) with a logo fill and a bottom progress bar, then slides up when the page is ready.
+- **Header** – logo with random hover colours and a time-shifted scroll, plus a menu button that opens a dimmed full-page overlay with a card that grows from the corner and changes background colour each time it opens.
+- **Hero** – large headline, animated outline shapes, arrowheads and a contact button with hover animation.
+- **Latest updates** – news items in an inner scroller; the title slides down only at the end of the scroll so both finish together.
+- **Promo** – full-width autoplaying video revealed through a house-shaped mask as you scroll.
+- **Timeline** – pinned section where posts fade and move in sequence while a timeline tape moves sideways.
+- **Open call, arrow band and newsletter** – content blocks with hover link effects and a signup form.
+- **Footer** – sits behind the newsletter and is revealed with a curtain effect as you scroll, with rolling-text hover links.
+- **Smooth scrolling** – a custom wheel-driven glide with hand-over between nested scroll areas.
 
-## Tech Stack
+## Getting started
 
-- React
-- TypeScript
-- CSS
+Requires Node.js 18 or newer.
 
-## Project Structure
+```bash
+npm install
+npm run dev       # start the dev server
+npm run build     # type-check and create a production build
+npm run preview   # preview the production build
+```
 
-```text
+> This repository contains the `src/` folder. Use the standard Vite React + TypeScript setup (`npm create vite@latest`, template `react-ts`) for the config files, then drop this `src/` folder in.
+
+## Project structure
+
+```
 src/
-├── assets/
-│   ├── news-1.png
-│   ├── news-2.png
-│   ├── news-3.png
-│   ├── timeline-1.png
-│   ├── timeline-2.png
-│   ├── timeline-3.png
-│   ├── timeline-4.png
-│   ├── timeline-5.png
-│   └── promo.mp4
-├── components/
-│   ├── Header.tsx
-│   ├── Hero.tsx
-│   ├── Updates.tsx
-│   ├── UpdatesItems.tsx
-│   ├── Promo.tsx
-│   ├── Timeline.tsx
-│   ├── OpenCall.tsx
-│   ├── Newsletter.tsx
-│   ├── Footer.tsx
-│   └── ...
-├── App.tsx
+├── App.tsx            # page layout: all sections in order
+├── main.tsx           # entry point
+├── index.css          # global reset, colour tokens, base font
 ├── App.css
-├── index.css
-└── main.tsx
+├── assets/            # images and the promo video
+└── components/        # one .tsx/.css pair per section or widget
+    ├── Loader         # start-up screen
+    ├── Header, Logo   # header, menu panel, shared logo
+    ├── Hero, Arrowheads, ContactButton
+    ├── Updates, UpdatesTitle, UpdatesItems
+    ├── Promo, Timeline, OpenCall
+    ├── ArrowBand, Newsletter, Footer
+    ├── PactLink, SlideText, ArrowIcon, PlayIcons   # shared UI pieces
+    └── SmoothScroll   # global smooth-scroll engine
 ```
 
-## Getting Started
+## Customising
 
-Make sure you have Node.js and npm installed.
-
-1. Clone the repository and open the project folder.
-2. Install the dependencies:
-
-   ```bash
-   npm install
-   ```
-
-3. Start the development server:
-
-   ```bash
-   npm run dev
-   ```
-
-4. Open the local URL printed in your terminal.
-
-If the project uses the standard Vite scripts, you can create a production build with:
-
-```bash
-npm run build
-```
-
-And preview that build locally with:
-
-```bash
-npm run preview
-```
+- **Promo video:** replace `src/assets/promo.mp4` (keep the file name).
+- **Colours:** edit the tokens at the top of `src/index.css`.
+- **Menu and footer links:** edit `src/components/navLinks.ts`.
+- **Fonts:** Inter and Anton are loaded from Google Fonts.
 
 ## Notes
 
-- The newsletter form currently provides a front-end interface only. It does not submit email addresses to a server or mailing-list service.
-- The supplied source snapshot contains the `src/` directory only. The repository also needs its project configuration files (such as `package.json` and the relevant build configuration) for the commands above to run.
+- Layout scales with the viewport width and was designed at about 1900px wide.
+- Animations respect the `prefers-reduced-motion` setting.
+- Some links (Partners, Agenda, Privacy Policy, Cookie settings) are placeholder anchors until their pages exist.
