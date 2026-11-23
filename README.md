@@ -1,75 +1,90 @@
-# React + TypeScript + Vite
+# Housing Pact — Samsun
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React and TypeScript website for the **Housing Pact**, an initiative focused on making high-quality rental housing more affordable in Samsun, Türkiye.
 
-Currently, two official plugins are available:
+The site introduces the initiative, shares project updates, explains its development timeline, and invites landowners and developers to take part in creating more affordable homes.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
 
-## React Compiler
+- **Interactive hero section** with animated logo shapes that respond to pointer movement.
+- **Navigation menu** with animated transitions and in-page links.
+- **Latest updates** section with a scrollable news panel and pointer-following visual effect.
+- **Promotional video** with a scroll-controlled, house-shaped reveal.
+- **Project timeline** presenting five stages of the Housing Pact, from early research through to reviewing its impact.
+- **Open call** section for developers and landowners interested in contributing projects.
+- **Momentum scrolling** with a scroll hand-off between the page and the news panel.
+- **Newsletter sign-up interface** and contact information in the footer.
+- **Custom loading screen** and animated hover interactions throughout the site.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech Stack
 
-## Expanding the ESLint configuration
+- React
+- TypeScript
+- CSS
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Project Structure
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```text
+src/
+├── assets/
+│   ├── news-1.png
+│   ├── news-2.png
+│   ├── news-3.png
+│   ├── timeline-1.png
+│   ├── timeline-2.png
+│   ├── timeline-3.png
+│   ├── timeline-4.png
+│   ├── timeline-5.png
+│   └── promo.mp4
+├── components/
+│   ├── Header.tsx
+│   ├── Hero.tsx
+│   ├── Updates.tsx
+│   ├── UpdatesItems.tsx
+│   ├── Promo.tsx
+│   ├── Timeline.tsx
+│   ├── OpenCall.tsx
+│   ├── Newsletter.tsx
+│   ├── Footer.tsx
+│   └── ...
+├── App.tsx
+├── App.css
+├── index.css
+└── main.tsx
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+## Getting Started
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Make sure you have Node.js and npm installed.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+1. Clone the repository and open the project folder.
+2. Install the dependencies:
 
+   ```bash
+   npm install
+   ```
+
+3. Start the development server:
+
+   ```bash
+   npm run dev
+   ```
+
+4. Open the local URL printed in your terminal.
+
+If the project uses the standard Vite scripts, you can create a production build with:
+
+```bash
+npm run build
 ```
+
+And preview that build locally with:
+
+```bash
+npm run preview
+```
+
+## Notes
+
+- The newsletter form currently provides a front-end interface only. It does not submit email addresses to a server or mailing-list service.
+- The supplied source snapshot contains the `src/` directory only. The repository also needs its project configuration files (such as `package.json` and the relevant build configuration) for the commands above to run.
